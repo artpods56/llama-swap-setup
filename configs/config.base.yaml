@@ -1,0 +1,19 @@
+# Llama-Swap Configuration File
+
+models:
+  "docker-llama":
+    proxy: "http://127.0.0.1:$${KEEP}{PORT}"
+    cmd: |
+      docker run --name ${LLAMA_CONTAINER_NAME}_${PLATFORM}
+      --init --rm -p \$${KEEP}{PORT}:8080 -v /mnt/nvme/models:/models
+      ${LLAMA_SERVER_IMAGE}
+      --model '/models/Qwen2.5-Coder-0.5B-Instruct-Q4_K_M.gguf'
+
+    cmdStop: docker stop ${LLAMA_CONTAINER_NAME}_${PLATFORM}
+
+
+server:
+  host: "localhost"
+  port: 8080
+  log_level: "info"
+
