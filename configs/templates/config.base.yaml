@@ -1,0 +1,25 @@
+models:
+  {% for _, model in models.items() -%}
+  "{{ model.name }}":
+    cmd: |
+      docker run --name {{ model.name.replace('/', '-') }}  
+      --network host
+      --init --rm -p $${KEEP}{PORT}:$${KEEP}{PORT} -v models:/models ${LLAMA_SERVER_IMAGE}
+      --port $${KEEP}{PORT}
+        {%- if model.model_type == "ggufs" %}
+        {%- set model_dir = model.name.replace('.gguf', '') %}
+      --model "/models/gguf/{{ model_dir }}/{{ model.name }}.gguf"
+        {%- endif -%}
+        {% if model.model_type == "safetensors" %} 
+      --hf "{{ model.name }}" 
+        {%- endif %}
+        {%- if model.mmproj %}
+      --mmproj "/models/gguf/{{ model_dir }}/mmproj_{{ model.name }}.gguf"
+        {%- endif %}
+        {%- for key, value in (model.runtime_kwargs or {}).items() %}
+      --{{ key }} {{ value }}
+        {%- endfor %}
+    cmdStop: docker stop {{ model.name.replace('/', '-') }}
+    proxy: "http://127.0.0.1:$${KEEP}{PORT}"
+
+  {% endfor %}

@@ -1,0 +1,14 @@
+models:
+  "gemma-3-270m-it-UD-Q8_K_XL":
+    cmd: >
+      docker run --init --rm -v models:/models  -p 9501:9501 --name "gemma-3-270m-it-UD-Q8_K_XL"
+      llama-server:cpu-arm64
+      --host 0.0.0.0
+      --port 9501
+      -ngl 99
+      --ctx-size 32768
+      --split-mode row
+      --temp 0.1
+      --model "/models/gguf/gemma-3-270m-it-UD-Q8_K_XL/gemma-3-270m-it-UD-Q8_K_XL.gguf"
+
+    proxy: http://127.0.0.1:9501

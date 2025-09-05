@@ -1,0 +1,32 @@
+services:
+  llama-swap:
+    container_name: llama-swap
+    image: ${LLAMA_SWAP_IMAGE}
+    platform: linux/${PLATFORM}
+    build:
+      context: .
+      platforms:
+        - linux/${PLATFORM}
+      dockerfile: Dockerfile
+      args:
+        LLAMA_SWAP_IMAGE: ${BASE_LLAMA_SWAP_IMAGE}
+    network_mode: host
+    volumes:
+      - models:/models:rw
+      - ${MODELS_DIRECTORY}:/host-models:ro
+      - ${CONFIGS_DIRECTORY}/config.${PLATFORM}.yaml:/app/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  watch-config:
+    image: docker:latest
+    volumes:
+      - ${CONFIGS_DIRECTORY}/config.${PLATFORM}.yaml:/app/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./watch-config.sh:/app/watch-config.sh:ro
+    entrypoint: ["sh", "-c", "/app/watch-config.sh"]
+
+
+volumes:
+  models:
+    external: true

@@ -1,0 +1,23 @@
+{
+  "ggufs": [
+    {
+      "name": "gemma-3-27b-it-Q4_K_M",
+      "description": "This model has vision and is good at strict instruction following.",
+      "url": "https://huggingface.co/unsloth/gemma-3-27b-it-GGUF/resolve/main/gemma-3-27b-it-Q4_K_M.gguf",
+      "mmproj": "https://huggingface.co/unsloth/gemma-3-27b-it-GGUF/resolve/main/mmproj-F32.gguf",
+      "runtime_kwargs": {
+      }
+    },
+    {
+      "name": "gemma-3-270m-it-UD-Q8_K_XL",
+      "description": "Some small model for testing.",
+      "url": "https://huggingface.co/unsloth/gemma-3-270m-it-GGUF/resolve/main/gemma-3-270m-it-UD-Q8_K_XL.gguf"
+    }
+  ],
+  "safetensors": [
+    {
+      "name": "google/gemma-3-270m",
+      "description": "A very small model, im using it just for testing."
+    }
+  ]
+}

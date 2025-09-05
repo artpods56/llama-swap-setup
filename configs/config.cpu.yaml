@@ -3,31 +3,31 @@ models:
     cmd: |
       docker run --name gemma-3-27b-it-Q4_K_M  
       --network host
-      --init --rm -p $${KEEP}{PORT}:$${KEEP}{PORT} -v models:/models ${LLAMA_SERVER_IMAGE}
-      --port $${KEEP}{PORT}
+      --init --rm -p ${PORT}:${PORT} -v models:/models llama-server:cpu-arm64
+      --port ${PORT}
       --model "/models/gguf/gemma-3-27b-it-Q4_K_M/gemma-3-27b-it-Q4_K_M.gguf"
       --mmproj "/models/gguf/gemma-3-27b-it-Q4_K_M/mmproj_gemma-3-27b-it-Q4_K_M.gguf"
     cmdStop: docker stop gemma-3-27b-it-Q4_K_M
-    proxy: "http://127.0.0.1:$${KEEP}{PORT}"
+    proxy: "http://127.0.0.1:${PORT}"
 
   "gemma-3-270m-it-UD-Q8_K_XL":
     cmd: |
       docker run --name gemma-3-270m-it-UD-Q8_K_XL  
       --network host
-      --init --rm -p $${KEEP}{PORT}:$${KEEP}{PORT} -v models:/models ${LLAMA_SERVER_IMAGE}
-      --port $${KEEP}{PORT}
+      --init --rm -p ${PORT}:${PORT} -v models:/models llama-server:cpu-arm64
+      --port ${PORT}
       --model "/models/gguf/gemma-3-270m-it-UD-Q8_K_XL/gemma-3-270m-it-UD-Q8_K_XL.gguf"
     cmdStop: docker stop gemma-3-270m-it-UD-Q8_K_XL
-    proxy: "http://127.0.0.1:$${KEEP}{PORT}"
+    proxy: "http://127.0.0.1:${PORT}"
 
   "google/gemma-3-270m":
     cmd: |
       docker run --name google-gemma-3-270m  
       --network host
-      --init --rm -p $${KEEP}{PORT}:$${KEEP}{PORT} -v models:/models ${LLAMA_SERVER_IMAGE}
-      --port $${KEEP}{PORT} 
+      --init --rm -p ${PORT}:${PORT} -v models:/models llama-server:cpu-arm64
+      --port ${PORT} 
       --hf "google/gemma-3-270m"
     cmdStop: docker stop google-gemma-3-270m
-    proxy: "http://127.0.0.1:$${KEEP}{PORT}"
+    proxy: "http://127.0.0.1:${PORT}"
 
   
